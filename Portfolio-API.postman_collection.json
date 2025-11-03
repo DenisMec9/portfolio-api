@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "Portfolio API (CRUD)",
+    "_postman_id": "b5eb91d5-0000-4444-9999-portfolio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/"
+      },
+      "response": []
+    },
+    {
+      "name": "Pessoas - List",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/pessoas"
+      },
+      "response": []
+    },
+    {
+      "name": "Pessoas - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/pessoas",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nome\": \"Novo Usu\\u00e1rio\", \"descricao\": \"Descri\\u00e7\\u00e3o...\", \"areaAtuacao\": \"Full Stack\"}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Experiencias - List (by pessoaId)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/experiencias?pessoaId=1"
+      },
+      "response": []
+    },
+    {
+      "name": "Projetos - List (by pessoaId)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/projetos?pessoaId=1"
+      },
+      "response": []
+    },
+    {
+      "name": "Contatos - List (by pessoaId)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/contatos?pessoaId=1"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
