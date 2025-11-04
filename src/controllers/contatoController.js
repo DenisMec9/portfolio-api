@@ -1,4 +1,4 @@
-import { prisma } from '../prismaClient.js';
+import prisma from '../prismaClient.js';
 export const list = async (req, res) => {
   const { pessoaId } = req.query;
   const where = pessoaId ? { pessoaId: Number(pessoaId) } : {};

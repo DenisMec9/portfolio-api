@@ -1,4 +1,5 @@
-import { prisma } from '../prismaClient.js';
+import prisma from '../prismaClient.js';
+
 export const list = async (_req, res) => {
   const pessoas = await prisma.pessoa.findMany({ include: { experiencias: true, projetos: true, contatos: true }, orderBy: { id: 'asc' } });
   res.json(pessoas);
