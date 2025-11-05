@@ -1,18 +1,54 @@
-import express from "express";
-import { 
-  listarExperiencias,
-  buscarExperienciaPorId,
-  criarExperiencia,
-  atualizarExperiencia,
-  excluirExperiencia
-} from "../controllers/experienciaController.js";
+import prisma from '../prismaClient.js';
 
-const router = express.Router();
+export const list = async (req, res) => {
+  const { pessoaId } = req.query;
+  const where = pessoaId ? { pessoaId: Number(pessoaId) } : {};
+  const items = await prisma.experiencia.findMany({
+    where,
+    orderBy: { id: 'asc' }
+  });
+  res.json(items);
+};
 
-router.get("/", listarExperiencias);
-router.get("/:id", buscarExperienciaPorId);   // ✅ ADICIONE ISTO
-router.post("/", criarExperiencia);
-router.put("/:id", atualizarExperiencia);
-router.delete("/:id", excluirExperiencia);
+export const getById = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const item = await prisma.experiencia.findUnique({ where: { id } });
 
-export default router;
+    if (!item) {
+      return res.status(404).json({ error: 'Experiência não encontrada!' });
+    }
+
+    res.json(item);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const create = async (req, res) => {
+  try {
+    const item = await prisma.experiencia.create({ data: req.body });
+    res.status(201).json(item);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const item = await prisma.experiencia.update({
+      where: { id },
+      data: req.body
+    });
+    res.json(item);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const remove = async (req, res) => {
+  const id = Number(req.params.id);
+  await prisma.experiencia.delete({ where: { id } });
+  res.json({ ok: true });
+};
